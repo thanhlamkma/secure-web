@@ -1,0 +1,41 @@
+
+
+3.4 Quản lý trạng thái phiên làm việc
+3.4.1 Phía client
+- cookie: Lưu tại client, gửi từ client cho server
+
+3.4.2 Phía server
+- session: client gửi đi id session, server trả về thông tin session cho client
+- Thông tin trạng thái được lưu trữ và xử lý phía server
+
+3.5 Mã hóa dữ liệu nhạy cảm
+- Bảo vệ thông tin trên đường truyền
+- Bảo vệ thông tin được lưu trữ trên server
+-
+
+3.6 Lọc dữ liệu người dùng
+- Dữ liệu là tất cả những dữ liệu mà client gửi lên
+- Có 2 loại: bộ lọc logic và bộ lọc làm sạch
+- Sự yếu kém trong việc lọc dữ liệu có thể dẫn đến: SQL Injection, Directory traversal,..
+
+3.6.1 Xác định các nguồn nhập liệu
+- Không bao giwof chèn trực tiếp dữ liệu từ các đối tượng vào 1 chuỗi
+- Khi có lỗi xảy ra chỉ hiện: Tên người dùng hoặc mật khẩu bị sai
+
+3.6.2 Chiến lược phòng thủ khi xây dựng ứng dụng web
+- Kiểm soát các biến
+- Xây dựng hàm lọc dữ liệu
+- Truy xuất dữ liệu không tường minh
+
+3.6.3 Ký thuật lọc dữ liệu người dùng
+- Kiểm tra biên
+- Đối sánh mẫu
+- Phản xạ dữ liệu
+- Mã hóa dữ liệu
+- Tham số hóa
+
+3.6.4 Hạn chế tối đa tác động của dữ liệu người dùng 
+- Giảm thiểu bề mặt tấn công, phạm vi tác động và kiện toàn bảo mật
+
+3.7 Bảo vệ cơ sở dữ liệu
+- Chống SQL Injection
