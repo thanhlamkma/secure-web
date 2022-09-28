@@ -19,7 +19,7 @@
 - Sự yếu kém trong việc lọc dữ liệu có thể dẫn đến: SQL Injection, Directory traversal,..
 
 3.6.1 Xác định các nguồn nhập liệu
-- Không bao giwof chèn trực tiếp dữ liệu từ các đối tượng vào 1 chuỗi
+- Không bao giờ chèn trực tiếp dữ liệu từ các đối tượng vào 1 chuỗi
 - Khi có lỗi xảy ra chỉ hiện: Tên người dùng hoặc mật khẩu bị sai
 
 3.6.2 Chiến lược phòng thủ khi xây dựng ứng dụng web
@@ -27,7 +27,7 @@
 - Xây dựng hàm lọc dữ liệu
 - Truy xuất dữ liệu không tường minh
 
-3.6.3 Ký thuật lọc dữ liệu người dùng
+3.6.3 Kỹ thuật lọc dữ liệu người dùng
 - Kiểm tra biên
 - Đối sánh mẫu
 - Phản xạ dữ liệu
@@ -39,3 +39,5 @@
 
 3.7 Bảo vệ cơ sở dữ liệu
 - Chống SQL Injection
+
+BTVN: Chọn 1 công cụ free để kiểm thử tĩnh với 3 file sql1, sql2 và cfrs1
