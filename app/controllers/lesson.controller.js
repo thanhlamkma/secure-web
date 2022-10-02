@@ -7,8 +7,9 @@ exports.getList = (req, res) => {
 };
 
 exports.getDetail = (req, res) => {
-  var data = Lesson.getById(req.params.id);
-  res.send({ result: data });
+  Lesson.getById(req.params.id, (data) => {
+    res.send({ result: data });
+  });
 };
 
 exports.addLesson = (req, res) => {

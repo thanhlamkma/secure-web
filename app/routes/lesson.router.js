@@ -11,6 +11,6 @@ router.post("/lesson/add", lessonController.addLesson);
 
 router.put("/lesson/edit", lessonController.editLesson);
 
-router.delete("/lesson/remove/:id", lessonController.removeLesson);
+router.delete("/lesson/delete/:id", lessonController.removeLesson);
 
 module.exports = router;
