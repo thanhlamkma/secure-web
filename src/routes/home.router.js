@@ -7,9 +7,17 @@ let router = express.Router();
 let initRoutes = (app) => {
   router.get("/", homeController.getHomePage);
 
-  router.get("/about", homeController.getAboutPage)
+  router.get("/about", homeController.getAboutPage);
 
-  router.get("/login", async (req, res) => {
+  router.get("/crud", homeController.getCrud);
+
+  router.post("/post-crud", homeController.postCrud);
+
+  router.post("/login", homeController.login);
+
+  router.post("/register", homeController.register);
+
+  router.get("/token", async (req, res) => {
     var user = {
       name: "admin",
       email: "admin@gmail.com",

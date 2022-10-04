@@ -1,0 +1,21 @@
+/* HEADER */
+
+/* BODY */
+.form-outline {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+button[type="button"]:hover {
+  background: white;
+}
+
+button[type="button"]:focus {
+  background: white;
+}
+
+/* FOOTER */
+#footer {
+  height: 50px;
+}
