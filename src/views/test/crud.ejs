@@ -10,19 +10,34 @@
     <link rel="stylesheet" href="/css/auth.css" />
 
     <!-- Latest compiled and minified CSS -->
+    <!-- Latest compiled and minified CSS -->
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
     />
 
     <!-- jQuery library -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
 
     <!-- Popper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+      crossorigin="anonymous"
+    ></script>
 
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Fontawesome-->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
@@ -31,10 +46,10 @@
   <body>
     <!-- Navbar -->
     <nav
-      class="navbar navbar-expand-lg navbar-light"
+      class="navbar navbar-expand-lg navbar-light px-3"
       style="background-color: #e3f2fd"
     >
-      <a class="navbar-brand font-weight-bold" href="/">
+      <a class="navbar-brand fw-bold" href="/">
         <img
           src="/images/logo.png"
           width="30"
@@ -48,111 +63,41 @@
       <button
         class="navbar-toggler"
         type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/crud"
-              >Home <span class="sr-only">(current)</span></a
-            >
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" href="/crud"> Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/about">About</a>
           </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Dropdown
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
+        <form class="d-flex">
           <input
-            class="form-control mr-sm-2"
+            class="form-control me-2"
             type="search"
             placeholder="Search"
             aria-label="Search"
           />
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-            Search
-          </button>
+          <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
       </div>
     </nav>
     <!-- Section: Design Block -->
     <section class="background-radial-gradient overflow-hidden">
-      <style>
-        .background-radial-gradient {
-          background-color: hsl(218, 41%, 15%);
-          background-image: radial-gradient(
-              650px circle at 0% 0%,
-              s hsl(218, 41%, 35%) 15%,
-              hsl(218, 41%, 30%) 35%,
-              hsl(218, 41%, 20%) 75%,
-              hsl(218, 41%, 19%) 80%,
-              transparent 100%
-            ),
-            radial-gradient(
-              1250px circle at 100% 100%,
-              hsl(218, 41%, 45%) 15%,
-              hsl(218, 41%, 30%) 35%,
-              hsl(218, 41%, 20%) 75%,
-              hsl(218, 41%, 19%) 80%,
-              transparent 100%
-            );
-        }
-
-        #radius-shape-1 {
-          height: 220px;
-          width: 220px;
-          top: -60px;
-          left: -130px;
-          background: radial-gradient(#44006b, #ad1fff);
-          overflow: hidden;
-        }
-
-        #radius-shape-2 {
-          border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
-          bottom: -60px;
-          right: -110px;
-          width: 300px;
-          height: 300px;
-          background: radial-gradient(#44006b, #ad1fff);
-          overflow: hidden;
-        }
-
-        .bg-glass {
-          background-color: hsla(0, 0%, 100%, 0.9) !important;
-          backdrop-filter: saturate(200%) blur(25px);
-        }
-      </style>
-
       <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
         <div class="row gx-lg-5 align-items-center mb-5">
           <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
             <h1
-              class="my-5 display-5 font-weight-bold ls-tight"
+              class="my-5 display-5 ls-tight fw-bold"
               style="color: hsl(218, 81%, 95%)"
             >
               Don't try to do anything <br />
@@ -211,9 +156,11 @@
                   </div>
 
                   <!-- Submit button -->
-                  <button type="submit" class="btn btn-primary btn-block mb-4">
-                    Sign in
-                  </button>
+                  <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary btn-block mb-4">
+                      Sign in
+                    </button>
+                  </div>
 
                   <!-- Register buttons -->
                   <div class="text-center">
@@ -256,7 +203,10 @@
     <!-- Section: Design Block -->
 
     <!-- Section: Footer -->
-    <section id="footer" class="d-flex justify-content-center align-items-center">
+    <section
+      id="footer"
+      class="d-flex justify-content-center align-items-center"
+    >
       &copy;Copyright 2022 grela.com
     </section>
   </body>

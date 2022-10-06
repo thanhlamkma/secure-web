@@ -13,6 +13,8 @@ let initRoutes = (app) => {
 
   router.post("/post-crud", homeController.postCrud);
 
+  router.get("/profile", homeController.getProfile);
+
   router.post("/login", homeController.login);
 
   router.post("/register", homeController.register);
