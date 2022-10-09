@@ -1,0 +1,98 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* HEADER */
+nav.navbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* BODY */
+.container {
+  margin-top: 56px;
+  padding: 20px 50px;
+}
+
+.body {
+  overflow: hidden;
+}
+
+/* Profile */
+.container .card {
+  position: relative;
+  padding: 8px;
+  width: 550px;
+  height: 560px;
+  /* background-color: rgb(132, 197, 255); */
+  border-radius: 15px;
+  background: #e6f3f9;
+  box-shadow: 12px 12px 24px #c8d3d9, -12px -12px 24px #ffffff;
+  border: none;
+  border-radius: 15px;
+}
+
+.upper {
+  height: 100px;
+}
+
+.upper img {
+  width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.user {
+  position: relative;
+}
+
+.profile img {
+  height: 80px;
+  width: 80px;
+  margin-top: 2px;
+}
+
+.profile {
+  position: absolute;
+  top: -30px;
+  left: 41.5%;
+  height: 90px;
+  width: 90px;
+  border: 3px solid #fff;
+
+  border-radius: 50%;
+}
+
+.follow {
+  border-radius: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 35px;
+}
+
+.stats span {
+  font-size: 29px;
+}
+
+/* FOOTER */
+#footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+}

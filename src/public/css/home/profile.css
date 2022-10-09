@@ -1,0 +1,151 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,700;1,300&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --color-active: rgb(0, 110, 255);
+  --color-inactive: rgb(164, 164, 164);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* HEADER */
+nav.navbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* BODY */
+/* Sidebar */
+.container {
+  margin-top: 56px;
+  padding: 20px 30px;
+}
+
+.profile-sidebar {
+  height: 100%;
+}
+
+.profile-sidebar .profile-sidebar-menu {
+  padding: 0 0 10px 20px;
+  border-right: 1px solid rgb(205, 205, 205);
+}
+
+.profile-sidebar .profile-sidebar-item {
+  /* border: 1px solid black; */
+  width: 100%;
+  padding: 16px 0px 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--color-inactive);
+  cursor: pointer;
+}
+
+.profile-sidebar .profile-sidebar-item.active,
+.profile-sidebar .profile-sidebar-item:hover {
+  border-right: 3px solid var(--color-active);
+  color: var(--color-active);
+}
+
+/* Info */
+.profile-info {
+  padding: 10px 100px;
+}
+
+.profile-info label {
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.profile-info .profile-image {
+  height: 100px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed gray;
+  border-radius: 50%;
+}
+
+.profile-info .profile-image img {
+  height: 80px;
+  width: 80px;
+}
+
+.profile-info .profile-input input,
+.profile-info .profile-input select {
+  width: 100%;
+  height: 42px;
+  padding: 8px 12px;
+  font-size: 15px;
+  color: rgb(73, 73, 73);
+  border: 2px solid rgb(218, 218, 218);
+  border-radius: 6px;
+}
+
+.profile-info .profile-input input:hover,
+.profile-info .profile-input select:hover,
+.profile-info .profile-input input:focus,
+.profile-info .profile-input select:focus {
+  border: 2px solid var(--color-active);
+  outline: var(--color-active);
+}
+
+.profile-info .profile-input input[type="submit"],
+.profile-info .profile-input button {
+  width: 100%;
+  height: 42px;
+  border-radius: 6px;
+  color: white;
+  background: var(--color-active);
+  font-weight: 500;
+  outline: none;
+  border: none;
+}
+
+.profile-info .profile-input input[type="submit"]:hover,
+.profile-info .profile-input button:hover {
+  opacity: 90%;
+}
+
+.profile-info .profile-checkbox {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-info .profile-checkbox label {
+  margin-bottom: 0;
+}
+
+.profile-info .profile-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+/* FOOTER */
+#footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+}

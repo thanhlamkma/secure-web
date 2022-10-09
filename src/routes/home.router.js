@@ -5,20 +5,24 @@ import _jwt from "../common/_jwt";
 let router = express.Router();
 
 let initRoutes = (app) => {
+  // GET
   router.get("/", homeController.getHomePage);
 
-  router.get("/about", homeController.getAboutPage);
+  router.get("/profile/:id", homeController.getProfile);
 
-  router.get("/crud", homeController.getCrud);
+  router.get("/change-password/:id", homeController.getChangePassword);
 
-  router.post("/post-crud", homeController.postCrud);
+  router.get("/auth", homeController.auth);
 
-  router.get("/profile", homeController.getProfile);
+  // POST
+  router.post("/post-login", homeController.postLogin);
 
-  router.post("/login", homeController.login);
+  router.post("/post-register", homeController.postRegister);
 
-  router.post("/register", homeController.register);
+  // PUT
+  router.post("/put-user", homeController.putUser);
 
+  // AUTHENTICATE
   router.get("/token", async (req, res) => {
     var user = {
       name: "admin",

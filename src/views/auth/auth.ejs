@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/images/logo.png" />
+    <title>Auth</title>
+    <link rel="stylesheet" href="/css/auth/login-register.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="blueBg">
+        <div class="box signin">
+          <h2>Already have a Account ?</h2>
+          <button class="signinBtn">Sign in</button>
+        </div>
+
+        <div class="box signup">
+          <h2>Don't have a Account ?</h2>
+          <button class="signupBtn">Sign up</button>
+        </div>
+      </div>
+
+      <div class="formBx">
+        <div class="form signinForm">
+          <h3>Sign In</h3>
+          <form action="">
+            <input type="email" placeholder="Email" name="email" />
+            <input type="password" placeholder="Password" name="password" />
+            <input type="submit" value="Login" />
+            <a href="#" class="forgot">Forgot Password ?</a>
+          </form>
+        </div>
+
+        <div class="form signupForm">
+          <h3>Sign Up</h3>
+          <form action="/post-register" method="POST">
+            <div class="grid-container">
+              <input type="text" placeholder="First name" name="firstName" />
+              <input type="text" placeholder="Last name" name="lastName" />
+              <select class="form-select" id="gender" name="gender">
+                <option value="" selected>Choose gender...</option>
+                <option value="true">Male</option>
+                <option value="false">Female</option>
+              </select>
+              <select class="form-select" id="role" name="roleId">
+                <option value="" selected>Choose role...</option>
+                <option value="admin">Admin</option>
+                <option value="student">Student</option>
+              </select>
+            </div>
+            <input type="email" placeholder="Email" name="email" />
+            <input type="text" placeholder="Address" name="address" />
+            <input type="text" placeholder="Phone" name="phone" />
+            <input type="password" placeholder="Password" name="password" />
+            <input type="password" placeholder="Confirm Password" name="confirmPassword" />
+            <input type="submit" value="Register" />
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const signinBtn = document.querySelector(".signinBtn");
+      const signupBtn = document.querySelector(".signupBtn");
+      const formBx = document.querySelector(".formBx");
+      const body = document.querySelector("body");
+
+      signupBtn.onclick = () => {
+        formBx.classList.add("active");
+        body.classList.add("active");
+      };
+
+      signinBtn.onclick = () => {
+        formBx.classList.remove("active");
+        body.classList.remove("active");
+      };
+    </script>
+  </body>
+</html>

@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine";
 import homeRouter from "./routes/home.router";
 import _authMiddleware from "./middleware/_authMiddleware";
+import expressEjsLayouts from "express-ejs-layouts";
 import connectDb from "./config/connectDb";
 require("dotenv").config();
 
@@ -12,12 +13,19 @@ let app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// Static files
 app.use(express.static(__dirname + "/public"));
 
+// Set templating engine
+app.use(expressEjsLayouts);
+app.set("layout", false);
 viewEngine(app);
 
 // Routers
 homeRouter(app);
+app.get("*", function (req, res) {
+  res.status(404).render("404.ejs");
+});
 
 connectDb();
 
