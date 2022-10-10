@@ -1,112 +1,99 @@
-import db from "../models/index";
 import userService from "../services/userService";
 
-// Chuyển sang file auth.controller.js
-let auth = (req, res) => {
-  return res.render("auth/auth.ejs");
-};
-
-let postLogin = () => {};
-
-let postRegister = async (req, res) => {
-  let response = await userService.createUser(req.body);
-  return res.send({ response: response });
-};
-
-// Giữ nguyên
 let getHomePage = async (req, res) => {
-  try {
-    let data = await db.User.findAll();
-    return res.render("home/index.ejs", {
-      layout: "../views/layout/index",
-      user: JSON.stringify(data),
-    });
-  } catch (error) {
-    console.log("err", error);
-  }
-};
-
-let getProfile = async (req, res) => {
-  let userId = req.params.id;
-  let response;
-  let data;
-  if (userId) {
-    try {
-      data = await userService.getUserById(req.params.id);
-      response = {
-        httpCode: res.statusCode,
-        isSuccess: true,
-        total: data.length,
-        data: data,
-      };
-    } catch (error) {
-      console.log("err", error);
-      response = {
-        httpCode: res.statusCode,
-        isSuccess: false,
-      };
-      return res.render("404.ejs", { ...response });
-    }
-    return res.render("home/profile.ejs", {
-      layout: "../views/layout/profile/index",
-      ...response,
-    });
-  }
-};
-
-let getChangePassword = async (req, res) => {
-  let userId = req.params.id;
-  let response;
-  let data;
-  if (userId) {
-    try {
-      data = await userService.getUserById(req.params.id);
-      response = {
-        httpCode: res.statusCode,
-        isSuccess: true,
-        total: data.length,
-        data: data,
-      };
-    } catch (error) {
-      console.log("err", error);
-      response = {
-        httpCode: res.statusCode,
-        isSuccess: false,
-      };
-      return res.render("404.ejs", { ...response });
-    }
-    return res.render("home/change-password.ejs", {
-      layout: "../views/layout/profile/index",
-      ...response,
-    });
-  }
-};
-
-let putUser = (req, res) => {
-  let data = req.body;
-  return res.send({ data: data });
-};
-
-// Chuyển sang file admin.controller.js
-let getManagePage = async (req, res) => {
-  let data = await userService.getAllUser();
-  return res.render("home/profile.ejs", {
-    // layout: "../views/layout/profile/index",
-    httpCode: res.statusCode,
-    total: data.length,
-    data: data,
+  return res.render("home/index.ejs", {
+    layout: "../views/layout/index",
   });
 };
 
-module.exports = {
-  auth: auth,
-  postLogin: postLogin,
-  postRegister: postRegister,
+let getProfile = async (req, res) => {
+  let userId = Number(req.params.id);
+  let response;
+  let data;
+  if (userId && typeof userId === "number") {
+    try {
+      data = await userService.getUserById(userId);
+      response = {
+        httpCode: res.statusCode,
+        isSuccess: true,
+        total: data.length,
+        data: data,
+      };
+      return res.render("home/profile.ejs", {
+        layout: "../views/layout/profile/index",
+        ...response,
+      });
+    } catch (error) {
+      console.log("err", error);
+      response = {
+        httpCode: res.statusCode,
+        isSuccess: false,
+      };
+      return res.render("404.ejs", { ...response });
+    }
+  } else return res.render("404.ejs");
+};
 
+let putUser = async (req, res) => {
+  let data = await userService.updateUser(req.body);
+  return res.redirect(`/profile/${data.id}`);
+};
+
+let getChangePassword = async (req, res) => {
+  let userId = Number(req.params.id);
+  let response;
+  let data;
+  if (userId && typeof userId === "number") {
+    try {
+      data = await userService.getUserById(userId);
+      response = {
+        httpCode: res.statusCode,
+        isSuccess: true,
+        total: data.length,
+        data: data,
+      };
+
+      return res.render("home/change-password.ejs", {
+        layout: "../views/layout/profile/index",
+        successMsg: req.flash("successMsg"),
+        failMsg: req.flash("failMsg"),
+        ...response,
+      });
+    } catch (error) {
+      console.log("err", error);
+      response = {
+        httpCode: res.statusCode,
+        isSuccess: false,
+      };
+
+      return res.render("404.ejs", { ...response });
+    }
+  } else return res.render("404.ejs");
+};
+
+let changePassword = async (req, res) => {
+  let userId = Number(req.params.id);
+  let data = await userService.updatePassword({
+    ...req.body,
+    id: userId,
+  });
+  console.log("data", data);
+  if (data) {
+    req.flash("successMsg", "Update password successfully");
+    req.flash("failMsg", undefined);
+  } else {
+    req.flash("successMsg", undefined);
+    req.flash("failMsg", "Update password failed");
+  }
+  return res.redirect(`/change-password/${userId}`);
+};
+
+module.exports = {
   getHomePage: getHomePage,
+
   getProfile: getProfile,
-  getChangePassword: getChangePassword,
   putUser: putUser,
 
-  getManagePage: getManagePage,
+  getChangePassword: getChangePassword,
+  changePassword: changePassword,
 };

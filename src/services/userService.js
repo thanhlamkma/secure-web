@@ -15,6 +15,26 @@ let handleHashPassword = (password) => {
   });
 };
 
+let login = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await db.User.findOne({
+        where: { email: data.email },
+        raw: true,
+      });
+      if (user) {
+        let success = await bcrypt.compare(data.password, user.password);
+
+        if (success) resolve(user);
+        else resolve();
+      }
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 let createUser = async (data) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -39,18 +59,31 @@ let createUser = async (data) => {
 let updateUser = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let user = db.User.findOne({ where: { id: data.id } });
-      if(user) {
-        user.firstName = data.firstName;
-        user.lastName = data.lastName;
-        user.email = data.email;
-        user.address = data.address;
-        user.phone = data.phone;
-        user.gender = data.gender;
-      }
-      await db.User.update({
-
+      let success = await db.User.update(data, {
+        where: {
+          id: data.id,
+        },
       });
+      let user;
+      if (success) {
+        user = await db.User.findByPk(data.id);
+        resolve(user);
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+let deleteUserById = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = await db.User.destroy({
+        where: {
+          id: id,
+        },
+      });
+      resolve(data);
     } catch (error) {
       reject(error);
     }
@@ -76,7 +109,38 @@ let getUserById = (id) => {
       let user = await db.User.findByPk(id, {
         raw: true,
       });
-      resolve(user);
+      if (user) resolve(user);
+      else resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+let updatePassword = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await db.User.findByPk(data.id, {
+        raw: true,
+      });
+
+      console.log("user", user);
+      if (user) {
+        let success = await bcrypt.compare(data.currentPassword, user.password);
+        console.log("success", success);
+
+        if (success) {
+          await db.User.update(
+            { ...user, password: await handleHashPassword(data.newPassword) },
+            {
+              where: {
+                id: data.id,
+              },
+            }
+          );
+          resolve(user);
+        } else resolve();
+      }
     } catch (error) {
       reject(error);
     }
@@ -84,7 +148,12 @@ let getUserById = (id) => {
 };
 
 module.exports = {
+  login: login,
+
   createUser: createUser,
+  updateUser: updateUser,
+  deleteUserById: deleteUserById,
   getAllUser: getAllUser,
   getUserById: getUserById,
+  updatePassword: updatePassword,
 };
