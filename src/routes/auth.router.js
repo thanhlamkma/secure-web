@@ -9,10 +9,14 @@ let authRoutes = (app) => {
   // GET
   router.get("/auth", authController.auth);
 
+  router.get("/forgot-password", authController.getForgotPassword);
+  
   // POST
   router.post("/post-login", authController.postLogin);
-
+  
   router.post("/post-register", authController.postRegister);
+
+  router.post("/post-email-otp", authController.postEmailOtp);
 
   return app.use("/", router);
 
