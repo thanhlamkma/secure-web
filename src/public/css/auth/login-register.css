@@ -135,6 +135,24 @@ body.active {
   font-weight: 500;
 }
 
+.alert {
+  padding: 10px;
+  margin-bottom: 14px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.alert-danger {
+  background: rgb(255, 90, 90);
+  border: 1px solid rgb(255, 49, 49);
+}
+
+.alert-success {
+  background: rgb(49, 132, 255);
+  border: 1px solid rgb(49, 132, 255);
+}
+
 .formBx .form form input,
 .formBx .form form select {
   width: 100%;
@@ -142,7 +160,13 @@ body.active {
   padding: 10px;
   outline: none;
   font-size: 14px;
-  border: 1px solid #333;
+  border: 2px solid rgb(179, 179, 179);
+  border-radius: 8px;
+}
+
+.formBx .form form input:focus,
+.formBx .form form select:focus {
+  border: 2px solid #03a9f4;
 }
 
 .formBx .form form input[type="submit"] {

@@ -26,8 +26,22 @@
         <div class="form signinForm">
           <h3>Sign In</h3>
           <form action="/post-login" method="POST">
-            <input type="email" placeholder="Email" name="email" />
-            <input type="password" placeholder="Password" name="password" />
+            <input type="email" placeholder="Email" name="email" required />
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              required
+            />
+            <% if (message === "Login") { %>
+            <div class="alert alert-danger" role="alert">
+              Email or password is invalid
+            </div>
+            <% } else if (message === "Register") { %>
+            <div class="alert alert-success" role="alert">
+              Create user successfully
+            </div>
+            <% } %>
             <input type="submit" value="Login" />
             <a href="#" class="forgot">Forgot Password ?</a>
           </form>
@@ -37,24 +51,44 @@
           <h3>Sign Up</h3>
           <form action="/post-register" method="POST">
             <div class="grid-container">
-              <input type="text" placeholder="First name" name="firstName" />
-              <input type="text" placeholder="Last name" name="lastName" />
+              <input
+                type="text"
+                placeholder="First name"
+                name="firstName"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Last name"
+                name="lastName"
+                required
+              />
               <select class="form-select" id="gender" name="gender">
                 <option value="" selected>Choose gender...</option>
                 <option value="true">Male</option>
                 <option value="false">Female</option>
               </select>
-              <select class="form-select" id="role" name="roleId">
+              <select class="form-select" id="role" name="roleId" required>
                 <option value="" selected>Choose role...</option>
                 <option value="admin">Admin</option>
                 <option value="student">Student</option>
               </select>
             </div>
-            <input type="email" placeholder="Email" name="email" />
+            <input type="email" placeholder="Email" name="email" required />
             <input type="text" placeholder="Address" name="address" />
-            <input type="text" placeholder="Phone" name="phone" />
-            <input type="password" placeholder="Password" name="password" />
-            <input type="password" placeholder="Confirm Password" name="confirmPassword" />
+            <input type="text" placeholder="Phone" name="phone" required />
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              required
+            />
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              name="confirmPassword"
+              required
+            />
             <input type="submit" value="Register" />
           </form>
         </div>

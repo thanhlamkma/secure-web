@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine";
+import authRouter from "./routes/auth.router";
 import homeRouter from "./routes/home.router";
 import adminRouter from "./routes/admin.router";
 import _authMiddleware from "./middleware/_authMiddleware";
@@ -31,6 +32,7 @@ app.set("layout", false);
 viewEngine(app);
 
 // Routers
+authRouter(app);
 homeRouter(app);
 adminRouter(app);
 app.get("*", function (req, res) {
