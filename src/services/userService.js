@@ -156,4 +156,6 @@ module.exports = {
   getAllUser: getAllUser,
   getUserById: getUserById,
   updatePassword: updatePassword,
+
+  handleHashPassword: handleHashPassword,
 };

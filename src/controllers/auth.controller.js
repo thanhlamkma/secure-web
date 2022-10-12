@@ -1,5 +1,6 @@
 import userService from "../services/userService";
 import emailService from "../services/emailService";
+import db from "../models/index";
 
 let auth = (req, res) => {
   return res.render("auth/auth.ejs", {
@@ -26,18 +27,48 @@ let postEmailOtp = async (req, res) => {
     } else {
       console.log("Email sent: " + info.response);
       req.flash("otp", otp);
+      req.flash("email", email);
       return res.redirect("/forgot-password");
     }
   });
-
-  // req.flash("otpMsg", "Send OTP failed");
-  // return res.redirect("/auth");
 };
 
 let getForgotPassword = async (req, res) => {
   return res.render("auth/forgotPassword.ejs", {
     otp: req.flash("otp"),
+    email: req.flash("email"),
   });
+};
+
+let postForgotPassword = async (req, res) => {
+  let user = await db.User.findOne({
+    where: { email: req.body.email },
+    raw: true,
+  });
+  if (user) {
+    let success = await db.User.update(
+      {
+        ...user,
+        password: await userService.handleHashPassword(req.body.password),
+      },
+      {
+        where: {
+          id: user.id,
+        },
+      }
+    );
+
+    if (success) {
+      req.flash("otpMsg", "Change password successfully");
+      return res.redirect("/auth");
+    } else {
+      req.flash("otpMsg", "Change password failed");
+      return res.redirect("/auth");
+    }
+  } else {
+    req.flash("otpMsg", "Change password failed");
+    return res.redirect("/auth");
+  }
 };
 
 let postLogin = async (req, res) => {
@@ -60,8 +91,11 @@ let postRegister = async (req, res) => {
 
 module.exports = {
   auth: auth,
+
   postEmailOtp: postEmailOtp,
   getForgotPassword: getForgotPassword,
+  postForgotPassword: postForgotPassword,
+
   postLogin: postLogin,
   postRegister: postRegister,
 };
