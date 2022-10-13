@@ -1,5 +1,4 @@
 import express from "express";
-import homeController from "../controllers/home.controller";
 import authController from "../controllers/auth.controller";
 import _jwt from "../common/_jwt";
 

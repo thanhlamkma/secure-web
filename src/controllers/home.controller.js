@@ -1,8 +1,16 @@
 import userService from "../services/userService";
+import jwt from "jsonwebtoken";
 
 let getHomePage = async (req, res) => {
+  let accessToken = req.flash("accessToken");
+  let userData = jwt.decode(accessToken);
+
+  console.log("req", req.headers);
+
   return res.render("home/index.ejs", {
     layout: "../views/layout/index",
+    accessToken: accessToken,
+    userId: userData.id,
   });
 };
 

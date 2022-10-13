@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt";
 import db from "../models/index";
+import _jwt from "../common/_jwt";
+import randToken from "rand-token";
 
 const saltRounds = 10;
 
@@ -22,13 +24,30 @@ let login = (data) => {
         where: { email: data.email },
         raw: true,
       });
-      if (user) {
-        let success = await bcrypt.compare(data.password, user.password);
+      if (!user) resolve();
 
-        if (success) resolve(user);
-        else resolve();
+      let isPasswordValid = await bcrypt.compare(data.password, user.password);
+      if (!isPasswordValid) resolve();
+
+      const accessToken = await _jwt.make({
+        email: user.email,
+        id: user.id,
+      });
+      if (!accessToken) resolve();
+
+      let refreshToken = randToken.generate(process.env.REFRESH_TOKEN_SIZE);
+      if (!user.refreshToken) {
+        // Nếu user này chưa có refresh token thì lưu refresh token đó vào database
+        await db.User.update(
+          { ...user, refreshToken: refreshToken },
+          { where: { id: user.id } }
+        );
+      } else {
+        // Nếu user này đã có refresh token thì lấy refresh token đó từ database
+        refreshToken = user.refreshToken;
       }
-      resolve();
+      // console.log("object", { ...user, refreshToken, accessToken });
+      resolve({ ...user, refreshToken, accessToken });
     } catch (error) {
       reject(error);
     }

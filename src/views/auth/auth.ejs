@@ -100,6 +100,7 @@
               name="password"
               required
             />
+
             <% if (message === "Login") { %>
             <div class="alert alert-danger" role="alert">
               Email or password is invalid
@@ -108,17 +109,22 @@
             <div class="alert alert-success" role="alert">
               Create user successfully
             </div>
+            <% } else if (message) { %>
+            <div class="alert alert-danger" role="alert"><%= message %></div>
             <% } %>
+
             <input type="submit" value="Login" />
             <!-- href="/forgot-password" -->
-            <a
-              class="forgot"
-              data-bs-toggle="modal"
-              data-bs-target="#sendOtpModal"
-              data-bs-whatever="@mdo"
-            >
-              Forgot Password ?
-            </a>
+            <div>
+              <a
+                class="forgot"
+                data-bs-toggle="modal"
+                data-bs-target="#sendOtpModal"
+                data-bs-whatever="@mdo"
+              >
+                Forgot Password ?
+              </a>
+            </div>
           </form>
         </div>
 

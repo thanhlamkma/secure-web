@@ -75,9 +75,14 @@ let postLogin = async (req, res) => {
   let user = await userService.login(req.body);
   if (!user) {
     req.flash("message", "Login");
-    return res.redirect("/auth");
+    return res.status(401).redirect("/auth");
   }
-  return res.redirect(`/profile/${user.id}`);
+  req.flash("accessToken", user.accessToken);
+
+  res.send({ ...user });
+  // return res.redirect(`/profile/${user.id}`);
+
+  return res.redirect("/");
 };
 
 let postRegister = async (req, res) => {

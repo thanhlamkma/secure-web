@@ -1,9 +1,10 @@
 import express from "express";
 import homeController from "../controllers/home.controller";
-import authController from "../controllers/auth.controller";
 import _jwt from "../common/_jwt";
+import _authMiddleware from "../middleware/_authMiddleware";
 
 let router = express.Router();
+const isAuth = _authMiddleware.isAuth;
 
 let initRoutes = (app) => {
   // GET
@@ -19,7 +20,6 @@ let initRoutes = (app) => {
   router.post("/put-user", homeController.putUser);
 
   router.post("/put-password/:id", homeController.changePassword);
-
 
   return app.use("/", router);
 };

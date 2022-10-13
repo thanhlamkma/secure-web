@@ -1,15 +1,14 @@
 const jwt = require("jsonwebtoken");
-const _app = require("./_app");
 
 // make => Tạo mã token
 let makeToken = (user) => {
   return new Promise((resolve, reject) => {
     jwt.sign(
-      { data: user },
-      _app.ACCESS_TOKEN,
+      user,
+      process.env.ACCESS_TOKEN_SECRET,
       {
         algorithm: "HS256",
-        expiresIn: _app.TOKEN_TIME_LIFE,
+        expiresIn: process.env.ACCESS_TOKEN_LIFE,
       },
       (err, _token) => {
         if (err) {
@@ -24,7 +23,7 @@ let makeToken = (user) => {
 // check => Xác thực mã đúng, sai, hết hạn
 let checkToken = (token) => {
   return new Promise((resolve, reject) => {
-    jwt.verify(token, _app.ACCESS_TOKEN, (err, data) => {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, data) => {
       if (err) {
         return reject(err);
       }

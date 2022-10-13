@@ -10,13 +10,16 @@ import connectDb from "./config/connectDb";
 import flash from "req-flash";
 import cookieParser from "cookie-parser";
 import session from "express-session";
+import cors from "cors";
 require("dotenv").config();
 
 let app = express();
 
+
 // Setup body parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
 
 // Setup flash
 app.use(cookieParser());
@@ -33,6 +36,7 @@ viewEngine(app);
 
 // Routers
 authRouter(app);
+app.use(_authMiddleware.isAuth);
 homeRouter(app);
 adminRouter(app);
 app.get("*", function (req, res) {
@@ -41,7 +45,6 @@ app.get("*", function (req, res) {
 
 connectDb();
 
-// app.use(_authMiddleware.isAuth);
 // var lessonRouter = require("./routes/lesson.router");
 
 // app.use("/", lessonRouter);

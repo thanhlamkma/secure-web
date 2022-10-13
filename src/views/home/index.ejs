@@ -246,3 +246,18 @@
   </div>
 </div>
 <!-- Animal End -->
+
+<script>
+  var client = require("http");
+  let accessToken = "<%= accessToken %>"
+    ? "<%= accessToken %>"
+    : localStorage.getItem("accessToken");
+  let userId = "<%= userId %>";
+  
+  console.log("accessToken", localStorage.getItem("accessToken"));
+  if (accessToken) localStorage.setItem("accessToken", accessToken);
+  localStorage.setItem("userId", userId);
+  
+  var header = { Host: "localhost:3000", Authorization: accessToken };
+  var request = client.request("GET", "/", header);
+</script>

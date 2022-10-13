@@ -1,16 +1,22 @@
+import _jwt from "../common/_jwt";
+
 let isAuth = async (req, res, next) => {
-  var _jwt = require("../common/_jwt");
+  req.headers.authorization = req.flash("accessToken");
   var _token = req.headers.authorization;
-  if (_token) {
-    try {
-      var authData = await _jwt.check(_token);
-      req.auth = authData;
-      next();
-    } catch (error) {
-      return res.send({ data: "Mã token không hợp lệ" });
-    }
-  } else {
-    return res.send({ data: "Bạn chưa gửi token" });
+  console.log("req", req.headers);
+
+  if (!_token) {
+    req.flash("message", "Access token not found!");
+    return res.status(401).redirect("/auth");
+  }
+
+  try {
+    var authData = await _jwt.check(_token);
+    req.user = authData;
+    next();
+  } catch (error) {
+    req.flash("message", "You do not have permission to access the website");
+    return res.status(401).redirect("/auth");
   }
 };
 
