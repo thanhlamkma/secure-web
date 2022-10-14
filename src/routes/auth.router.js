@@ -10,6 +10,8 @@ let authRoutes = (app) => {
 
   router.get("/forgot-password", authController.getForgotPassword);
 
+  router.get("/logout", authController.logout);
+
   // POST
   router.post("/post-login", authController.postLogin);
 

@@ -3,6 +3,10 @@ import emailService from "../services/emailService";
 import db from "../models/index";
 
 let auth = (req, res) => {
+  var _token = req.cookies.userLogin;
+
+  if (_token) return res.redirect("/");
+
   return res.render("auth/auth.ejs", {
     message: req.flash("message"),
     otpMsg: req.flash("otpMsg"),
@@ -74,24 +78,45 @@ let postForgotPassword = async (req, res) => {
 let postLogin = async (req, res) => {
   let user = await userService.login(req.body);
   if (!user) {
-    req.flash("message", "Login");
-    return res.status(401).redirect("/auth");
+    return res.json({
+      isSuccess: false,
+      message: "Email or password is invalid",
+    });
   }
-  req.flash("accessToken", user.accessToken);
 
-  res.send({ ...user });
-  // return res.redirect(`/profile/${user.id}`);
-
-  return res.redirect("/");
+  let accessToken = user.accessToken;
+  const cookieOption = {
+    expiresIn: new Date(
+      Date.now() + process.env.ACCESS_TOKEN_LIFE * 24 * 60 * 60 * 100
+    ),
+    httpOnly: true,
+  };
+  res.cookie("userLogin", accessToken, cookieOption);
+  return res.send({
+    isSuccess: true,
+    message: "Login successfully",
+    user: user,
+    accessToken: accessToken,
+  });
 };
 
 let postRegister = async (req, res) => {
   let data = await userService.createUser(req.body);
   if (data) {
-    req.flash("message", "Register");
-    return res.redirect("/auth");
+    return res.send({
+      isSuccess: true,
+      message: "Register successfully",
+    });
   }
-  return res.send({ data: data });
+  return res.send({
+    isSuccess: false,
+    message: "Email has been registered",
+  });
+};
+
+const logout = (req, res) => {
+  res.clearCookie("userLogin");
+  res.redirect("/");
 };
 
 module.exports = {
@@ -103,4 +128,5 @@ module.exports = {
 
   postLogin: postLogin,
   postRegister: postRegister,
+  logout: logout,
 };

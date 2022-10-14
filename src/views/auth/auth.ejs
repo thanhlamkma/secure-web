@@ -92,26 +92,31 @@
         <!-- Sign in -->
         <div class="form signinForm">
           <h3>Sign In</h3>
-          <form action="/post-login" method="POST">
-            <input type="email" placeholder="Email" name="email" required />
+          <form onsubmit="return false" id="loginForm">
             <input
+              class="email-login"
+              type="email"
+              placeholder="Email"
+              name="email"
+              required
+            />
+            <input
+              class="pass-login"
               type="password"
               placeholder="Password"
               name="password"
               required
             />
-
-            <% if (message === "Login") { %>
-            <div class="alert alert-danger" role="alert">
-              Email or password is invalid
-            </div>
-            <% } else if (message === "Register") { %>
-            <div class="alert alert-success" role="alert">
-              Create user successfully
-            </div>
-            <% } else if (message) { %>
-            <div class="alert alert-danger" role="alert"><%= message %></div>
-            <% } %>
+            <div
+              class="error-login alert alert-danger"
+              role="alert"
+              style="display: none"
+            ></div>
+            <div
+              class="success-login alert alert-success"
+              role="alert"
+              style="display: none"
+            ></div>
 
             <input type="submit" value="Login" />
             <!-- href="/forgot-password" -->
@@ -131,15 +136,18 @@
         <!-- Sign up -->
         <div class="form signupForm">
           <h3>Sign Up</h3>
-          <form action="/post-register" method="POST">
+          <!-- <form action="/post-register" method="POST"> -->
+          <form onsubmit="return false" id="registerForm">
             <div class="grid-container">
               <input
+                class="firstName"
                 type="text"
                 placeholder="First name"
                 name="firstName"
                 required
               />
               <input
+                class="lastName"
                 type="text"
                 placeholder="Last name"
                 name="lastName"
@@ -156,21 +164,52 @@
               <option value="true">Male</option>
               <option value="false">Female</option>
             </select>
-            <input type="email" placeholder="Email" name="email" required />
-            <input type="text" placeholder="Address" name="address" />
-            <input type="text" placeholder="Phone" name="phone" required />
             <input
+              class="emailRegister"
+              type="email"
+              placeholder="Email"
+              name="email"
+              required
+            />
+            <input
+              class="address"
+              type="text"
+              placeholder="Address"
+              name="address"
+            />
+            <input
+              class="phone"
+              type="text"
+              placeholder="Phone"
+              name="phone"
+              required
+            />
+            <input
+              class="passRegister"
               type="password"
               placeholder="Password"
               name="password"
               required
             />
             <input
+              class="confirmPassword"
               type="password"
               placeholder="Confirm Password"
               name="confirmPassword"
               required
             />
+            <!-- Message -->
+            <div
+              class="error-register alert alert-danger"
+              role="alert"
+              style="display: none"
+            ></div>
+            <div
+              class="success-register alert alert-success"
+              role="alert"
+              style="display: none"
+            ></div>
+
             <input type="submit" value="Register" />
           </form>
         </div>
@@ -230,5 +269,9 @@
         body.classList.remove("active");
       };
     </script>
+
+    <!-- Script -->
+    <script src="/js/auth/login.js"></script>
+    <script src="/js/auth/register.js"></script>
   </body>
 </html>

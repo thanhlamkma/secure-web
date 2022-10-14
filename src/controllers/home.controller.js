@@ -1,16 +1,15 @@
 import userService from "../services/userService";
-import jwt from "jsonwebtoken";
+import _jwt from "../common/_jwt";
 
 let getHomePage = async (req, res) => {
-  let accessToken = req.flash("accessToken");
-  let userData = jwt.decode(accessToken);
-
-  console.log("req", req.headers);
+  var _token = req.cookies.userLogin;
+  var user = await _jwt.check(_token);
 
   return res.render("home/index.ejs", {
     layout: "../views/layout/index",
-    accessToken: accessToken,
-    userId: userData.id,
+    httpCode: res.statusCode,
+    isSuccess: true,
+    data: user,
   });
 };
 

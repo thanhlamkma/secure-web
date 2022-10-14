@@ -15,7 +15,6 @@ require("dotenv").config();
 
 let app = express();
 
-
 // Setup body parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -27,6 +26,7 @@ app.use(session({ secret: "secret" }));
 app.use(flash());
 
 // Static files
+// app.use("/js", express.static(__dirname + "/public/js"));
 app.use(express.static(__dirname + "/public"));
 
 // Set templating engine

@@ -34,7 +34,7 @@
         <a id="profile" class="nav-link">Profile</a>
       </li>
       <li class="nav-item">
-        <a href="/auth" class="nav-link">
+        <a href="/logout" class="nav-link">
           <span>Logout</span>
         </a>
       </li>
@@ -51,6 +51,6 @@
   </div>
 </nav>
 <script>
-  let userId = localStorage.getItem("userId");
+  let userId = "<%= data.id %>";
   document.getElementById("profile").href = `/profile/${userId}`;
 </script>

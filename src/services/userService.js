@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import db from "../models/index";
 import _jwt from "../common/_jwt";
 import randToken from "rand-token";
+import jwt from "jsonwebtoken";
 
 const saltRounds = 10;
 
@@ -54,21 +55,91 @@ let login = (data) => {
   });
 };
 
+let refreshToken = async (req, res) => {
+  // Lấy access token từ header
+  const accessTokenFromHeader = req.headers.authorization;
+  if (!accessTokenFromHeader) {
+    return res
+      .status(400)
+      .json({ isSuccess: false, message: "Don't find this access token" });
+  }
+
+  // Lấy refresh token từ body
+  const refreshTokenFromBody = req.body.refreshToken;
+  if (!refreshTokenFromBody) {
+    return res
+      .status(400)
+      .json({ isSuccess: false, message: "Don't find this refresh token" });
+  }
+
+  const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
+  const accessTokenLife = process.env.ACCESS_TOKEN_LIFE;
+
+  // Decode access token đó
+  const decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, {
+    ignoreExpiration: true,
+  });
+  if (!decoded) {
+    return res
+      .status(400)
+      .json({ isSuccess: false, message: "Access token is invalid" });
+  }
+
+  const email = decoded.payload.email; // Lấy username từ payload
+
+  const user = await db.User.findOne({ where: { email: email }, raw: true });
+  if (!user) {
+    return res.status(401).send("User không tồn tại.");
+  }
+
+  if (refreshTokenFromBody !== user.refreshToken) {
+    return res.status(400).send("Refresh token không hợp lệ.");
+  }
+
+  // Tạo access token mới
+  const dataForAccessToken = {
+    username,
+  };
+
+  const accessToken = await authMethod.generateToken(
+    dataForAccessToken,
+    accessTokenSecret,
+    accessTokenLife
+  );
+  if (!accessToken) {
+    return res
+      .status(400)
+      .send("Tạo access token không thành công, vui lòng thử lại.");
+  }
+  return res.json({
+    accessToken,
+  });
+};
+
 let createUser = async (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let hashPassword = await handleHashPassword(data.password);
-      await db.User.create({
-        email: data.email,
-        password: hashPassword,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        address: data.address,
-        phone: data.phone,
-        gender: data.gender,
-        // roleId: data.roleId,
+      let user = await db.User.findOne({
+        where: {
+          email: data.email,
+        },
       });
-      resolve("Create user successfully");
+      if (!user) {
+        let hashPassword = await handleHashPassword(data.password);
+        let success = await db.User.create({
+          email: data.email,
+          password: hashPassword,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          address: data.address,
+          phone: data.phone,
+          gender: data.gender,
+          // roleId: data.roleId,
+        });
+        resolve(success);
+      } else {
+        resolve();
+      }
     } catch (error) {
       reject(error);
     }
@@ -177,4 +248,5 @@ module.exports = {
   updatePassword: updatePassword,
 
   handleHashPassword: handleHashPassword,
+  refreshToken: refreshToken,
 };
