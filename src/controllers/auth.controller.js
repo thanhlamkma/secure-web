@@ -4,8 +4,10 @@ import db from "../models/index";
 
 let auth = (req, res) => {
   var _token = req.cookies.userLogin;
+  var role = req.cookies.type;
 
-  if (_token) return res.redirect("/");
+  if (_token && role === "student") return res.redirect("/");
+  else if (_token && role === "admin") return res.redirect("/admin");
 
   return res.render("auth/auth.ejs", {
     message: req.flash("message"),
@@ -92,6 +94,7 @@ let postLogin = async (req, res) => {
     httpOnly: true,
   };
   res.cookie("userLogin", accessToken, cookieOption);
+  res.cookie("type", user.roleId, cookieOption);
   return res.send({
     isSuccess: true,
     message: "Login successfully",

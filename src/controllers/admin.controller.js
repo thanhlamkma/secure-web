@@ -3,6 +3,7 @@ import userService from "../services/userService";
 let getManagePage = async (req, res) => {
   let data = await userService.getAllUser();
   return res.render("admin/manage.ejs", {
+    layout: "../views/layout/admin/index",
     httpCode: res.statusCode,
     total: data.length,
     data: data,
