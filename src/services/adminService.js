@@ -4,6 +4,23 @@ import _jwt from "../common/_jwt";
 import jwt from "jsonwebtoken";
 import userService from "../services/userService";
 
+let getAllUserByRole = (role) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await db.User.findAll({
+        where: {
+          roleId: role,
+        },
+        raw: true,
+      });
+      if (user) resolve(user);
+      else resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 let getUserById = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -53,7 +70,10 @@ let updateUser = (data) => {
     try {
       // let password = await userService.handleHashPassword(data.password);
       let success = await db.User.update(
-        { ...data, password: await userService.handleHashPassword(data.password) },
+        {
+          ...data,
+          password: await userService.handleHashPassword(data.password),
+        },
         {
           where: {
             id: data.id,
@@ -88,6 +108,7 @@ let deleteUserById = (id) => {
 
 module.exports = {
   getUserById,
+  getAllUserByRole,
   createUser,
   updateUser,
   deleteUserById,

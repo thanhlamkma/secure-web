@@ -1,10 +1,21 @@
 import userService from "../services/userService";
 import adminService from "../services/adminService";
+import permissionService from "../services/permissionService";
 import db from "../models/index";
 
 let getManagePage = async (req, res) => {
   let data = await userService.getAllUser();
   return res.render("admin/manage.ejs", {
+    layout: "../views/layout/admin/index",
+    httpCode: res.statusCode,
+    total: data.length,
+    data: data,
+  });
+};
+
+let getPermission = async (req, res) => {
+  let data = await adminService.getAllUserByRole("staff");
+  return res.render("admin/permission.ejs", {
     layout: "../views/layout/admin/index",
     httpCode: res.statusCode,
     total: data.length,
@@ -136,6 +147,38 @@ let deleteUser = async (req, res) => {
   });
 };
 
+// Permission
+let getUserPermission = async (req, res) => {
+  let userId = req.params.id;
+  let data = await permissionService.getPermissionByUserId(userId);
+  if (data) {
+    return res.json({
+      isSuccess: true,
+      data: data,
+      message: "Get permission successfully",
+    });
+  }
+  return res.json({
+    isSuccess: true,
+    data: data,
+    message: "Get permission failed",
+  });
+};
+
+let changePermission = async (req, res) => {
+  let data = await permissionService.updatePermission(req.body);
+  if (data) {
+    return res.json({
+      isSuccess: true,
+      message: "Change permission successfully",
+    });
+  }
+  return res.json({
+    isSuccess: false,
+    message: "Change permission failed",
+  });
+};
+
 module.exports = {
   getManagePage: getManagePage,
   getUserInfo: getUserInfo,
@@ -144,4 +187,8 @@ module.exports = {
   deleteUser: deleteUser,
   getProfile: getProfile,
   getChangePassword: getChangePassword,
+
+  getPermission: getPermission,
+  getUserPermission: getUserPermission,
+  changePermission: changePermission,
 };

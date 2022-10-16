@@ -8,6 +8,8 @@ let adminRoutes = (app) => {
   // GET
   router.get("/", adminController.getManagePage);
   router.get("/user/:id", adminController.getUserInfo);
+  router.get("/permission", adminController.getPermission);
+  router.get("/permission/:id", adminController.getUserPermission);
 
   // POST
   router.post("/add-user", adminController.addUser);
