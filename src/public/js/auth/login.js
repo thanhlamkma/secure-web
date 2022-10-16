@@ -28,7 +28,7 @@ loginForm.addEventListener("submit", () => {
         successLogin.style.display = "block";
         errorLogin.style.display = "none";
         successLogin.innerText = data.message;
-        window.location.reload()
+        window.location.reload();
       }
     });
 });

@@ -1,4 +1,6 @@
 import userService from "../services/userService";
+import adminService from "../services/adminService";
+import db from "../models/index";
 
 let getManagePage = async (req, res) => {
   let data = await userService.getAllUser();
@@ -10,13 +12,24 @@ let getManagePage = async (req, res) => {
   });
 };
 
-let postUser = async (req, res) => {
-  let data = await userService.createUser(req.body);
-  return res.send({ data: data });
+let getUserInfo = async (req, res) => {
+  let user = await userService.getUserById(req.params.id);
+  if (user) {
+    return res.json({
+      isSuccess: true,
+      data: user,
+      message: "Find user successfully",
+    });
+  }
+  return res.json({
+    isSuccess: true,
+    data: user,
+    message: "User have id = " + req.body.id + " not found",
+  });
 };
 
 let getProfile = async (req, res) => {
-  let userId = req.params.id;
+  let userId = req.body.id;
   let response;
   let data;
   if (userId) {
@@ -73,21 +86,61 @@ let getChangePassword = async (req, res) => {
   }
 };
 
-let putUser = async (req, res) => {
-  let data = await userService.updateUser(req.body);
-  return res.redirect(`/profile/${data.id}`);
+let addUser = async (req, res) => {
+  let data = await adminService.createUser(req.body);
+  let users = await db.User.findAll({
+    raw: true,
+  });
+  if (data) {
+    return res.json({
+      isSuccess: true,
+      data: users,
+      message: "Create user successfully",
+    });
+  }
+  return res.json({
+    isSuccess: false,
+    data: users,
+    message: "Email has been registered",
+  });
+};
+
+let editUser = async (req, res) => {
+  let data = await adminService.updateUser(req.body);
+  console.log("data", req.body);
+
+  if (data) {
+    return res.json({
+      isSuccess: true,
+      message: "Update user successfully",
+    });
+  }
+  return res.json({
+    isSuccess: false,
+    message: "Update user failed",
+  });
 };
 
 let deleteUser = async (req, res) => {
-  let id = req.params.id;
-  await userService.deleteUserById(id);
-  return res.redirect("/admin");
+  let id = req.body.id;
+  let data = await adminService.deleteUserById(id);
+  if (data) {
+    return res.json({
+      isSuccess: true,
+      message: "Delete user successfully",
+    });
+  }
+  return res.json({
+    isSuccess: false,
+    message: "Delete user failed",
+  });
 };
 
 module.exports = {
   getManagePage: getManagePage,
-  postUser: postUser,
-  putUser: putUser,
+  getUserInfo: getUserInfo,
+  addUser: addUser,
+  editUser: editUser,
   deleteUser: deleteUser,
   getProfile: getProfile,
   getChangePassword: getChangePassword,

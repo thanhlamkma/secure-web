@@ -134,7 +134,6 @@ let createUser = async (data) => {
           address: data.address,
           phone: data.phone,
           gender: data.gender,
-          // roleId: data.roleId,
         });
         resolve(success);
       } else {
@@ -159,21 +158,6 @@ let updateUser = (data) => {
         user = await db.User.findByPk(data.id);
         resolve(user);
       }
-    } catch (error) {
-      reject(error);
-    }
-  });
-};
-
-let deleteUserById = (id) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let data = await db.User.destroy({
-        where: {
-          id: id,
-        },
-      });
-      resolve(data);
     } catch (error) {
       reject(error);
     }
@@ -242,7 +226,6 @@ module.exports = {
 
   createUser: createUser,
   updateUser: updateUser,
-  deleteUserById: deleteUserById,
   getAllUser: getAllUser,
   getUserById: getUserById,
   updatePassword: updatePassword,

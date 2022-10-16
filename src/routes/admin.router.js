@@ -7,15 +7,16 @@ let router = express.Router();
 let adminRoutes = (app) => {
   // GET
   router.get("/", adminController.getManagePage);
+  router.get("/user/:id", adminController.getUserInfo);
 
   // POST
-  router.post("/post-user", adminController.postUser);
+  router.post("/add-user", adminController.addUser);
 
   // PUT
-  router.post("/put-user", adminController.putUser);
+  router.post("/edit-user", adminController.editUser);
 
   // DELETE
-  router.get("/delete-user/:id", adminController.deleteUser);
+  router.post("/delete-user", adminController.deleteUser);
 
   return app.use("/admin", router);
 };

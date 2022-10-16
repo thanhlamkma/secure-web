@@ -1,7 +1,218 @@
+<!-- Toast message -->
+<div
+  id="toastNotice"
+  class="toast"
+  role="alert"
+  aria-live="assertive"
+  aria-atomic="true"
+  data-bs-delay="3000"
+  style="background: white; position: absolute; top: 10px; z-index: 20"
+>
+  <div class="toast-header">
+    <div
+      style="
+        margin-right: 10px;
+        width: 20px;
+        height: 20px;
+        background: blue;
+        border-radius: 4px;
+      "
+    ></div>
+    <strong class="me-auto">Grela Admin</strong>
+    <small>1 mins ago</small>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="toast"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="toast-body">
+    <div
+      class="success-alert alert alert-primary"
+      role="alert"
+      style="display: none"
+    ></div>
+    <div
+      class="error-alert alert alert-danger"
+      role="alert"
+      style="display: none"
+    ></div>
+  </div>
+</div>
 
-<div class="container d-flex justify-content-center align-items-center gap-5">
-  <!-- Card user -->
-  <div class="w-40 card">
+<!-- Table -->
+<div class="row">
+  <!-- column -->
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <!-- title -->
+        <div class="d-md-flex">
+          <div>
+            <h4 class="card-title">Users</h4>
+            <h5 class="card-subtitle">Overview of Users</h5>
+          </div>
+          <div class="ms-auto">
+            <div class="dl">
+              <button
+                type="button"
+                class="btn btn-info"
+                data-bs-toggle="modal"
+                data-bs-target="#formAddModal"
+                style="color: white; font-weight: 500"
+              >
+                Add User
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- title -->
+        <div class="table-responsive">
+          <table class="table mb-0 table-hover align-middle text-nowrap">
+            <thead>
+              <tr>
+                <th class="border-top-0">Serials</th>
+                <th class="border-top-0">Name</th>
+                <th class="border-top-0">Email</th>
+                <th class="border-top-0">Role</th>
+                <th class="border-top-0">Address</th>
+                <th class="border-top-0">Phone</th>
+                <th class="border-top-0">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(var i = 0; i < data.length; i++ ) { %>
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="m-r-10">
+                      <a
+                        class="btn btn-circle d-flex justify-content-center align-items-center btn-info text-white"
+                        ><%= i + 1 %></a
+                      >
+                    </div>
+                  </div>
+                </td>
+                <td><%= data[i].lastName %></td>
+                <td><%= data[i].email %></td>
+                <td style="text-transform: capitalize">
+                  <% if (data[i].roleId === "customer") { %>
+                  <label class="badge bg-secondary"
+                    ><%= data[i].roleId %></label
+                  >
+                  <% } else if (data[i].roleId === "staff") { %>
+                  <label class="badge bg-success">
+                    <%= data[i].roleId %>
+                  </label>
+                  <% } else { %>
+                  <label class="badge bg-primary">
+                    <%= data[i].roleId %>
+                  </label>
+                  <% } %>
+                </td>
+                <td><%= data[i].address %></td>
+                <td><%= data[i].phone %></td>
+                <!-- <td>
+                  <label class="badge bg-danger">Angular</label>
+                  <label class="badge bg-info">Vue Js</label>
+                </td> -->
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    data-bs-toggle="modal"
+                    data-bs-target="#formEditModal"
+                    style="margin-right: 6px; color: white; font-weight: 500"
+                    onclick="getUserInfo('<%= data[i].id %>')"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteModal"
+                    style="color: white; font-weight: 500"
+                    onclick="deleteUser('<%= data[i].id %>', '<%= data[i].lastName %>')"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Table -->
+
+<!-- Modal -->
+<%- include("modalAdd") -%> <%- include("modalEdit") -%>
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5
+          class="modal-title fs-2 fw-bolder text-danger"
+          id="deleteModalLabel"
+        >
+          Delete user
+        </h5>
+        <button
+          type="button"
+          class="btn-close-delete btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">Are you sure to delete user?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <a type="button" class="btn-delete btn btn-danger text-white">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal -->
+
+<!-- Script -->
+<script
+  type="text/javascript"
+  src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"
+></script>
+<script src="/js/admin/addUser.js"></script>
+<script src="/js/admin/editUser.js"></script>
+<script src="/js/admin/deleteUser.js"></script>
+
+<!-- Style -->
+<style>
+  form input,
+  form select {
+    border: 1px solid rgb(191, 191, 191) !important;
+    border-radius: 4px !important;
+  }
+
+  #formAdd label,
+  #formEdit label {
+    font-weight: 500;
+    color: rgb(14, 14, 14);
+  }
+</style>
+
+<!-- Card user -->
+<!-- <div class="w-40 card">
     <div class="upper">
       <img src="https://i.imgur.com/Qtrsrk5.jpg" class="img-fluid" />
     </div>
@@ -53,35 +264,5 @@
         </div>
       </div>
     </div>
-  </div>
-  <!-- Table user -->
-  <table class="w-50 table table-light table-hover">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for(var i = 0; i < data.length; i++ ) { %>
-      <tr>
-        <th scope="row"><%= i + 1 %></th>
-        <td><%= data[i].lastName %></td>
-        <td><%= data[i].email %></td>
-        <td>
-          <a type="button" class="btn btn-success">Edit</a>
-          <a
-            href="/admin/delete-user/<%= data[i].id %> "
-            type="button"
-            class="btn btn-danger"
-            >Delete</a
-          >
-        </td>
-      </tr>
-      <% } %>
-    </tbody>
-  </table>
-</div>
-
+  </div> -->
+<!-- Table user -->

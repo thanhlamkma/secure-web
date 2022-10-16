@@ -6,7 +6,8 @@ let auth = (req, res) => {
   var _token = req.cookies.userLogin;
   var role = req.cookies.type;
 
-  if (_token && role === "student") return res.redirect("/");
+  if (_token && role === "customer") return res.redirect("/");
+  else if (_token && role === "staff") return res.redirect("/staff");
   else if (_token && role === "admin") return res.redirect("/admin");
 
   return res.render("auth/auth.ejs", {
@@ -95,7 +96,7 @@ let postLogin = async (req, res) => {
   };
   res.cookie("userLogin", accessToken, cookieOption);
   res.cookie("type", user.roleId, cookieOption);
-  return res.send({
+  return res.json({
     isSuccess: true,
     message: "Login successfully",
     user: user,
@@ -106,12 +107,12 @@ let postLogin = async (req, res) => {
 let postRegister = async (req, res) => {
   let data = await userService.createUser(req.body);
   if (data) {
-    return res.send({
+    return res.json({
       isSuccess: true,
       message: "Register successfully",
     });
   }
-  return res.send({
+  return res.json({
     isSuccess: false,
     message: "Email has been registered",
   });
@@ -119,6 +120,7 @@ let postRegister = async (req, res) => {
 
 const logout = (req, res) => {
   res.clearCookie("userLogin");
+  res.clearCookie("type");
   res.redirect("/");
 };
 
