@@ -3,14 +3,17 @@ import _jwt from "../common/_jwt";
 
 let getHomePage = async (req, res) => {
   var _token = req.cookies.userLogin;
+  var role = req.cookies.type;
   var user = await _jwt.check(_token);
+  console.log("user", user);
 
-  return res.render("home/index.ejs", {
-    layout: "../views/layout/index",
-    httpCode: res.statusCode,
-    isSuccess: true,
-    data: user,
-  });
+  if (user && role === "customer")
+    return res.render("home/index.ejs", {
+      layout: "../views/layout/index",
+      httpCode: res.statusCode,
+      isSuccess: true,
+      data: user,
+    });
 };
 
 let getProfile = async (req, res) => {

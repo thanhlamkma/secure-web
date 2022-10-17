@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine";
 import authRouter from "./routes/auth.router";
 import homeRouter from "./routes/home.router";
+import staffRouter from "./routes/staff.router";
 import adminRouter from "./routes/admin.router";
 import _authMiddleware from "./middleware/_authMiddleware";
 import expressEjsLayouts from "express-ejs-layouts";
@@ -38,6 +39,7 @@ viewEngine(app);
 authRouter(app);
 app.use(_authMiddleware.isAuth);
 homeRouter(app);
+staffRouter(app);
 adminRouter(app);
 app.get("*", function (req, res) {
   res.status(404).render("404.ejs");

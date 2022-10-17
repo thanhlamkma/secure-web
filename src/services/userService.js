@@ -32,6 +32,7 @@ let login = (data) => {
 
       const accessToken = await _jwt.make({
         email: user.email,
+        role: user.role,
         id: user.id,
       });
       if (!accessToken) resolve();

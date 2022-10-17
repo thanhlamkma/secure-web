@@ -5,6 +5,7 @@ import db from "../models/index";
 
 let getManagePage = async (req, res) => {
   let data = await userService.getAllUser();
+  
   return res.render("admin/manage.ejs", {
     layout: "../views/layout/admin/index",
     httpCode: res.statusCode,
